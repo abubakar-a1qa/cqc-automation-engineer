@@ -37,6 +37,7 @@ public final class LocatorConstants {
     public static final By HELP_FORM_HIDE_BUTTON = By.xpath("//button[contains(@class,'help-form__send-to-bottom-button')]");
     public static final By HIDDEN_HELP_FORM = By.xpath("//div[contains(@class,'help-form') and contains(@class,'is-hidden')]");
     public static final By COOKIES_BANNER = By.xpath("//div[contains(@class,'cookies')]");
-    public static final By COOKIES_ACCEPT_BUTTON = By.xpath("//button[normalize-space()='Not really, no']");
+    //public static final By COOKIES_ACCEPT_BUTTON = By.xpath("//button[normalize-space()='Not really, no']");
+    public static final By COOKIES_ACCEPT_BUTTON = By.xpath("//button[normalize-space()='Not really, yes']");
     public static final By TIMER_ELEMENT = By.xpath("//div[contains(@class,'timer')]");
 }

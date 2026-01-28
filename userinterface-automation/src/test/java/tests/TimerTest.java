@@ -1,13 +1,20 @@
 package tests;
 
 import base.BaseTest;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.WelcomePage;
 
+@Feature("Timer Functionality")
 public class TimerTest extends BaseTest {
 
     @Test
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify timer starts at 00:00:00")
     public void testTimerStartsAtZero() {
         // Test Case 4 - Step 1: Navigate to home page and then game page
         WelcomePage welcomePage = new WelcomePage(driver);

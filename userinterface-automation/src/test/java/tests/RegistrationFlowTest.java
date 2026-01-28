@@ -1,6 +1,10 @@
 package tests;
 
 import base.BaseTest;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.CardOnePage;
@@ -8,9 +12,12 @@ import pages.CardThreePage;
 import pages.CardTwoPage;
 import pages.WelcomePage;
 
+@Feature("Registration Flow")
 public class RegistrationFlowTest extends BaseTest {
 
     @Test
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Verify complete registration flow from welcome page through all cards")
     public void testCompleteRegistrationFlow() {
         // Test Case 1 - Step 1: Navigate to home page
         WelcomePage welcomePage = new WelcomePage(driver);

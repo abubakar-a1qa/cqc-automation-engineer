@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="UI Automation Test Suite" parallel="false" verbose="2">
+    <parameter name="baseUrl" value="http://localhost:3000" />
+    
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg" />
+        <listener class-name="base.AllureScreenshotListener" />
+    </listeners>
+
+    <test name="Cookies Tests">
+        <classes>
+            <class name="tests.CookiesTest" />
+        </classes>
+    </test>
+
+    <test name="Help Form Tests">
+        <classes>
+            <class name="tests.HelpFormTest" />
+        </classes>
+    </test>
+
+    <test name="Timer Tests">
+        <classes>
+            <class name="tests.TimerTest" />
+        </classes>
+    </test>
+
+    <test name="Registration Flow Tests">
+        <classes>
+            <class name="tests.RegistrationFlowTest" />
+        </classes>
+    </test>
+</suite>
