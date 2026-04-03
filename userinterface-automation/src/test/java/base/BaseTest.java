@@ -1,5 +1,6 @@
 package base;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -25,14 +26,18 @@ public class BaseTest {
         ChromeOptions options = new ChromeOptions();
 
         // =========================
-        // UNIVERSAL CONFIG (LOCAL + CI)
+        // CI + LOCAL SAFE CONFIG
         // =========================
         options.addArguments("--headless=new");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1920,1080");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--remote-allow-origins=*");
 
-        // 🔥 CRITICAL: Use Chrome binary from GitLab CI
+        // =========================
+        // CHROME BINARY HANDLING (CI SAFE)
+        // =========================
         String chromeBinary = System.getenv("CHROME_BIN");
 
         if (chromeBinary != null && !chromeBinary.isEmpty()) {
@@ -43,12 +48,13 @@ public class BaseTest {
         }
 
         // =========================
-        // DRIVER INIT
+        // DRIVER SETUP (FIXED)
         // =========================
+        WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver(options);
 
         // =========================
-        // BASIC CONFIG
+        // TIMEOUTS
         // =========================
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driver.manage().window().maximize();
