@@ -1,10 +1,7 @@
 package base;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.ITestResult;
@@ -25,25 +22,28 @@ public class BaseTest {
 
         baseUrl = ConfigManager.getBaseUrl();
 
-        // Setup driver
-        WebDriverManager.chromedriver().setup();
-
         ChromeOptions options = new ChromeOptions();
 
-        // ✅ IMPORTANT for CI/CD (GitLab, Docker)
+        // =========================
+        // CI/CD SAFE CONFIGURATION
+        // =========================
         options.addArguments("--headless=new");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1920,1080");
 
+        // 🔥 FIX: Explicit binary path for Docker Selenium image
+        options.setBinary("/usr/bin/google-chrome");
+
+        // =========================
+        // DRIVER INIT
+        // =========================
         driver = new ChromeDriver(options);
 
-        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-
         driver.get(baseUrl);
 
-        Allure.step("Browser opened and navigated to " + baseUrl);
+        Allure.step("Browser opened and navigated to: " + baseUrl);
     }
 
     @AfterMethod
