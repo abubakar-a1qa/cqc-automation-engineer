@@ -25,22 +25,34 @@ public class BaseTest {
         ChromeOptions options = new ChromeOptions();
 
         // =========================
-        // CI/CD SAFE CONFIGURATION
+        // UNIVERSAL CONFIG (LOCAL + CI)
         // =========================
         options.addArguments("--headless=new");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1920,1080");
 
-        // 🔥 FIX: Explicit binary path for Docker Selenium image
-        options.setBinary("/usr/bin/google-chrome");
+        // 🔥 CRITICAL: Use Chrome binary from GitLab CI
+        String chromeBinary = System.getenv("CHROME_BIN");
+
+        if (chromeBinary != null && !chromeBinary.isEmpty()) {
+            options.setBinary(chromeBinary);
+            Allure.step("Using Chrome binary from CI: " + chromeBinary);
+        } else {
+            Allure.step("Using system default Chrome (local execution)");
+        }
 
         // =========================
         // DRIVER INIT
         // =========================
         driver = new ChromeDriver(options);
 
+        // =========================
+        // BASIC CONFIG
+        // =========================
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        driver.manage().window().maximize();
+
         driver.get(baseUrl);
 
         Allure.step("Browser opened and navigated to: " + baseUrl);
