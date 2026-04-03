@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  selenium-tests:
+    build: .
+    container_name: ui-automation-tests
+    volumes:
+      - ./allure-results:/app/target/allure-results
+      - ./allure-report:/app/allure-report
+    environment:
+      - DISPLAY=:99
+    command: >
+      bash -c "
+        Xvfb :99 -screen 0 1920x1080x24 &
+        mvn test &&
+        mvn allure:report
+      "
+
+  allure-server:
+    image: nginx:alpine
+    container_name: allure-report-server
+    ports:
+      - "8080:80"
+    volumes:
+      - ./allure-report:/usr/share/nginx/html
+    depends_on:
+      - selenium-tests
+    profiles:
+      - reports

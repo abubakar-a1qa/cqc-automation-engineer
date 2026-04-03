@@ -1,0 +1,33 @@
+image: maven:3.8.5-openjdk-17
+
+stages:
+  - build
+  - test
+  - deploy
+
+build-job:
+  stage: build
+  script:
+    - mvn clean package
+
+test-job:
+  stage: test
+  script:
+    - mvn clean test -Dallure.results.directory=target/allure-results
+    - mvn allure:report
+  artifacts:
+    paths:
+      - target/allure-results/
+      - target/site/allure-maven-plugin/
+    expire_in: 1 hour
+
+pages:
+  stage: deploy
+  image: alpine
+  script:
+    - mkdir -p public
+    - cp -r target/site/allure-maven-plugin/* public
+    - echo "Allure report will be available at:https://$CI_PROJECT_NAMESPACE.gitlab.io/$CI_PROJECT_NAME/"
+  artifacts:
+      paths:
+        - public
