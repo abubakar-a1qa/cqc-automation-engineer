@@ -27,6 +27,15 @@
     </test>
 
     <test name="Registration Flow Tests">
+        <groups>
+            <run>
+                <include name="registration"/>
+                <include name="smoke"/>
+                <include name="critical"/>
+                <include name="regression"/>
+                <include name="performance"/>
+            </run>
+        </groups>
         <classes>
             <class name="tests.RegistrationFlowTest"/>
         </classes>
