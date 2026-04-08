@@ -25,13 +25,11 @@ public class BaseTest {
 
         baseUrl = ConfigManager.getBaseUrl();
 
-        // Setup driver
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
 
-        // ✅ IMPORTANT for CI/CD (GitLab, Docker)
-        options.addArguments("--headless=new");
+        options.addArguments("--disable-gpu");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1920,1080");
