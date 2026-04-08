@@ -25,10 +25,8 @@ public class BaseTest {
 
         baseUrl = ConfigManager.getBaseUrl();
 
-ChromeOptions options = new ChromeOptions();
+        ChromeOptions options = new ChromeOptions();
 
-        // For local development, remove headless mode to see browser
-        // For CI/CD, keep headless mode
         String isHeadless = System.getenv("HEADLESS_MODE");
         if (isHeadless == null || isHeadless.equals("false")) {
             options.addArguments("--disable-gpu");
@@ -42,14 +40,11 @@ ChromeOptions options = new ChromeOptions();
         String gridUrl = System.getenv("SELENIUM_GRID_URL");
         String isLocal = System.getenv("LOCAL_MODE");
 
-        // Check if running locally or with Selenium Grid
         if (isLocal != null && isLocal.equals("true")) {
-            // Local mode - use ChromeDriver directly
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver(options);
             Allure.step("Browser started locally in visible mode");
         } else {
-            // Grid mode - use RemoteWebDriver
             if (gridUrl == null || gridUrl.isEmpty()) {
                 gridUrl = "http://selenium:4444/wd/hub";
             }
