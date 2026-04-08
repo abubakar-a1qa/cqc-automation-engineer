@@ -20,19 +20,18 @@ public class BaseTest {
     @BeforeMethod
     public void setUp() {
         baseUrl = ConfigManager.getBaseUrl();
-        
-        // Setup Chrome driver with visible browser
+
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-gpu");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1920,1080");
-        
+
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-        
+
         driver.get(baseUrl);
         Allure.step("Browser opened and navigated to " + baseUrl);
     }
@@ -42,7 +41,7 @@ public class BaseTest {
         if (!result.isSuccess()) {
             captureScreenshot("Failure Screenshot");
         }
-        
+
         if (driver != null) {
             driver.quit();
             Allure.step("Browser closed");
