@@ -5,68 +5,47 @@ import io.qameta.allure.Allure;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import utils.ConfigManager;
 
 import java.io.ByteArrayInputStream;
-import java.net.URL;
 import java.time.Duration;
 
 public class BaseTest {
-
     protected WebDriver driver;
     protected String baseUrl;
 
     @BeforeMethod
-    public void setUp() throws Exception {
-
+    public void setUp() {
         baseUrl = ConfigManager.getBaseUrl();
-
+        
+        // Setup Chrome driver with visible browser
+        WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-
-        String isHeadless = System.getenv("HEADLESS_MODE");
-        if (isHeadless == null || isHeadless.equals("false")) {
-            options.addArguments("--disable-gpu");
-        } else {
-            options.addArguments("--headless=new");
-        }
+        options.addArguments("--disable-gpu");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--window-size=1920,1080");
-
-        String gridUrl = System.getenv("SELENIUM_GRID_URL");
-        String isLocal = System.getenv("LOCAL_MODE");
-
-        if (isLocal != null && isLocal.equals("true")) {
-            WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver(options);
-            Allure.step("Browser started locally in visible mode");
-        } else {
-            if (gridUrl == null || gridUrl.isEmpty()) {
-                gridUrl = "http://selenium:4444/wd/hub";
-            }
-            driver = new RemoteWebDriver(new URL(gridUrl), options);
-            Allure.step("Browser started via Selenium Grid: " + gridUrl);
-        }
-
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        
+        driver = new ChromeDriver(options);
         driver.manage().window().maximize();
-
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+        
         driver.get(baseUrl);
+        Allure.step("Browser opened and navigated to " + baseUrl);
     }
 
     @AfterMethod
     public void tearDown(ITestResult result) {
-
         if (!result.isSuccess()) {
             captureScreenshot("Failure Screenshot");
         }
-
+        
         if (driver != null) {
             driver.quit();
+            Allure.step("Browser closed");
         }
     }
 
