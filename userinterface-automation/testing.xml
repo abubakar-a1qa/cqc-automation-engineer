@@ -14,6 +14,12 @@
         </classes>
     </test>
 
+    <test name="TestNG Test">
+        <classes>
+            <class name="tests.TestNGReportGenerationTest"/>
+        </classes>
+    </test>
+
     <test name="Help Form Tests">
         <classes>
             <class name="tests.HelpFormTest"/>

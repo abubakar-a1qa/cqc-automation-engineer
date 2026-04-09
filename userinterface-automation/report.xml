@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="UI Automation Test Suite" parallel="tests" thread-count="3" verbose="2">
+    <parameter name="baseUrl" value="http://localhost:3000"/>
+
+    <listeners>
+        <listener class-name="io.qameta.allure.testng.AllureTestNg"/>
+        <listener class-name="base.AllureScreenshotListener"/>
+        <listener class-name="listeners.TestExecutionListener"/>
+    </listeners>
+
+    <test name="TestNG Test">
+        <classes>
+            <class name="tests.TestNGReportGenerationTest"/>
+        </classes>
+    </test>
+</suite>

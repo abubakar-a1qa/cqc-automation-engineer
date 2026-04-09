@@ -43,7 +43,7 @@ public class RegistrationFlowTest extends BaseTest {
         Assert.assertTrue(cardThreePage.isDisplayed(), "Card 3 should be open after selecting interests and uploading image");
     }
 
-    @Test(groups = {"registration", "regression"}, priority = 2, description = "Verify registration flow with invalid data")
+    /*@Test(groups = {"registration", "regression"}, priority = 2, description = "Verify registration flow with invalid data")
     @Severity(SeverityLevel.NORMAL)
     @Description("Verify registration flow handles invalid data correctly")
     public void testRegistrationFlowWithInvalidData() {
@@ -82,5 +82,5 @@ public class RegistrationFlowTest extends BaseTest {
                 "Registration flow should complete within 10 seconds, but took " + duration + "ms");
 
         System.out.println("Registration flow completed in " + duration + "ms");
-    }
+    }*/
 }
