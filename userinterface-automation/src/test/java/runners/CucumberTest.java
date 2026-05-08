@@ -6,7 +6,7 @@ import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
         features = "src/test/java/features",
-        glue = {"stepdefs", "hooks"},
+        glue = {"stepDefinitions", "hooks"},
         plugin = {
                 "pretty",
                 "html:target/cucumber-reports/cucumber-pretty.html",

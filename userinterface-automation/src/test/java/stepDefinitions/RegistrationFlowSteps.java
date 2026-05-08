@@ -1,4 +1,4 @@
-package stepdefs;
+package stepDefinitions;
 
 import hooks.Hooks;
 import io.cucumber.java.en.Given;
